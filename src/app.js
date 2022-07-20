@@ -21,10 +21,10 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
-server.use(expres.static(path.join(__dirname, '/build')))
+server.use(expres.static(path.join(__dirname, './build')))
 server.use('/api/', rutas),
 server.use('/',(req,res) => {
-  res.sendFile(path.join(__dirname, '/build', 'index.html'))
+  res.sendFile(path.join(__dirname, './build', 'index.html'))
 })
 
 
