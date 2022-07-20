@@ -6,11 +6,11 @@ require('dotenv').config()
 
 const filo = require('./models/filo')
 const {
-  DATABASE_URL,
+  DB_P,
   } = process.env;
 
 
-const sequelize = new Sequelize({DATABASE_URL},{
+const sequelize = new Sequelize(DATABASE_URL,{
     logging: false,
     native : false ,
     dialectOptions: {
