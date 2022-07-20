@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.67eb14fc.css",
+    "main.js": "/static/js/main.f0dceb06.js",
+    "static/js/787.5b5dfee8.chunk.js": "/static/js/787.5b5dfee8.chunk.js",
+    "static/media/fondo.jpg": "/static/media/fondo.6434794799bc07069145.jpg",
+    "static/media/Ingreso-56026 (1).pdf": "/static/media/Ingreso-56026 (1).30dfc1e18a43d5ffcd28.pdf",
+    "static/media/ChronostratChart2022-02SpanishAmer.pdf": "/static/media/ChronostratChart2022-02SpanishAmer.ac1c1606c0be17f1ad8e.pdf",
+    "static/media/ChronostratChart2022-02.pdf": "/static/media/ChronostratChart2022-02.f87aad1314a0c164f2b2.pdf",
+    "static/media/TABLINUM.jpg": "/static/media/TABLINUM.80491f8bb9b5cae39cd3.jpg",
+    "static/media/profilePrueba.pdf": "/static/media/profilePrueba.fdf3e2d0b0d976b6f82a.pdf",
+    "static/media/Profile.pdf": "/static/media/Profile.ca9c519abfc22de8c56b.pdf",
+    "static/media/favicon.png": "/static/media/favicon.074c04b0a6b582a83a7d.png",
+    "static/media/_labels.pdf": "/static/media/81E3386C3D4ECB4309E777BC4F7CF647_labels.62c46b2c0d31d7039c9e.pdf",
+    "index.html": "/index.html",
+    "main.67eb14fc.css.map": "/static/css/main.67eb14fc.css.map",
+    "main.f0dceb06.js.map": "/static/js/main.f0dceb06.js.map",
+    "787.5b5dfee8.chunk.js.map": "/static/js/787.5b5dfee8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.67eb14fc.css",
+    "static/js/main.f0dceb06.js"
+  ]
+}
