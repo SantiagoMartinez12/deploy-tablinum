@@ -3,10 +3,8 @@ const { Sequelize, belongsToMany,hasOne} = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config()
-
-const filo = require('./models/filo')
 const {
-  DB_P,
+  DATABASE_URL,
   } = process.env;
 
 
