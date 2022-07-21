@@ -1128,7 +1128,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
  rutas.get('/getPdf/:filename', function(req, res) {
   console.log(req.params.filename)
   let filename = req.params.filename
-  const rs = fs.createReadStream("./../back/src/pdf/" + filename);
+  const rs = fs.createReadStream("/app/src/pdf/" + filename);
 
   rs.pipe(res)
 }); 
