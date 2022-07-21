@@ -5,8 +5,8 @@ class FileController
   {
     const archivo = req.files.archivo;
     const fileName = archivo.name;
-    const path = './../back/src/pdf/' + fileName;
-    console.log(path)
+    const path = 'back/src/pdf/' + fileName;
+    console.log(__dirname)
     try {
       archivo.mv(path, (error) => {
         if (error) {
