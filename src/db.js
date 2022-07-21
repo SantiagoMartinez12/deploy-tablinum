@@ -4,6 +4,16 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config()
 const {
+  DB_USER, DB_PASS, DB_HOST,
+} = process.env;
+
+
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASS}@${DB_HOST}/back`,{
+  logging: false,
+
+})
+
+/* const {
   DATABASE_URL,
   } = process.env;
 
@@ -18,7 +28,7 @@ const sequelize = new Sequelize(DATABASE_URL,{
       }
     }
 
-})
+}) */
 
 const basename = path.basename(__filename);
 const modelDefiners = [];
