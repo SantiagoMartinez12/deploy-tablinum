@@ -14,6 +14,6 @@ conn.sync({force: false}).then(()=> {
     tablaPartes();
     
     server.listen(port, ()=> {
-        console.log('funcionando')
+        console.log('funcionando en el puerto:' + port);
     })
 })

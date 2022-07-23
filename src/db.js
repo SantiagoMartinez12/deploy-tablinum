@@ -30,6 +30,7 @@ const sequelize = new Sequelize(DATABASE_URL,{
 
 })
 
+
 const basename = path.basename(__filename);
 const modelDefiners = [];
 
