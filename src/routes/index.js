@@ -810,12 +810,19 @@ const {parametro,indice} =req.query;
     let archivoname = nombreArchivo.nombreArchivo
 
     try {
-      fs.unlinkSync('./../front/src/pdf/' + archivoname)
+      fs.unlinkSync('/app/src/pdf/' + archivoname)
       res.status(200).send({ status: 'success', msg: 'archivo ' + archivoname + ' eliminado'});
     } catch(err) {
       console.error('Algo ocurrio al eliminar archivo', err)
     }
    })
+   rutas.get('/getPdf/:filename', function(req, res) {
+    console.log(req.params.filename)
+    let filename = req.params.filename
+    const rs = fs.createReadStream("/app/src/pdf/" + filename);
+  
+    rs.pipe(res)
+  }); 
    rutas.post('/usuario',async (req, res) => {
     try{
         let {id, correo, nombre, imagen} = req.body
