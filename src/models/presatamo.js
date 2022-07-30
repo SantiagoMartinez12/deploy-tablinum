@@ -11,7 +11,7 @@ const Sequelize = require('sequelize')
                 type: DataTypes.STRING,
             },
             numeroespecimen: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.JSON,
             }, 
             generoespecie: {
                 type: DataTypes.STRING,
@@ -21,6 +21,9 @@ const Sequelize = require('sequelize')
             },
             investigador: {
                 type: DataTypes.STRING,
+            },
+            correo: {
+                type: DataTypes.STRING
             },
             contacto: {
                 type: DataTypes.STRING,
