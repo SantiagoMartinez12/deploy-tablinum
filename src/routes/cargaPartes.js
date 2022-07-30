@@ -21,6 +21,10 @@ module.exports = async()=>{
         
         var tabla=[
             {
+              primaria: 'nueva',
+              secundaria: []
+            },
+            {
             primaria: 'Esqueleto Completo',
             secundaria: []
             },    {

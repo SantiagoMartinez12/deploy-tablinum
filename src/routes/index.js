@@ -10,7 +10,7 @@ let fs = require('fs');
 
 
 
-const {  especimen, generoespecie,periodoEpoca,filo, parte ,prestamo, usuarios, bochon} = conn.models
+const {  especimen, generoespecie,periodoEpoca,filo, parte ,prestamo, usuarios, bochon,formacioncuenca} = conn.models
 
 
 //const app = expres()
@@ -75,12 +75,25 @@ rutas.get('/especimen',async (req, res) => {
       //buscamos el ultimo id ingresado
          numero[0].map(e=>{
          
-             numeros.push(e.especimennumero)
+             numeros.push(Number(e.especimennumero))
          })
        //  console.log(numeros)
           newId=Math.max(...numeros)+1;
            //console.log(resultadoBusqueda)
-      return res.send({newId})
+           var primero = numeros[0]
+           var final = newId
+           var faltantes = []
+   // console.log(primero, final)  
+     while(primero < final){
+      
+       if(!numeros.includes(primero)){
+         faltantes.push(primero)
+
+       }
+       primero++
+     }     
+     
+      return res.send({newId, faltantes})
   } 
 
   else if(!parametro){
@@ -191,26 +204,26 @@ rutas.get('/especimen',async (req, res) => {
        
         let especimen1 = await especimen.findOne({ where: { especimennumero: parameters.especimennumero } })
         let cambiarDetail = await especimen.update({
-            genero: parameters.genero ? parameters.genero : especimen1.dataValues?.genero ? especimen1.dataValues?.genero : 'sp.',
-            bochonnumero: parameters.bochonnumero ? parameters.bochonnumero : especimen1.dataValues?.bochonnumero ? especimen1.dataValues?.bochonnumero : 'sp',
+            genero: parameters.genero ? parameters.genero : especimen1.dataValues?.genero ? especimen1.dataValues?.genero : 'sin especificar',
+            bochonnumero: parameters.bochonnumero ? parameters.bochonnumero : especimen1.dataValues?.bochonnumero ? especimen1.dataValues?.bochonnumero : '0',
             sigla: 'PVSJ',
-            especie: parameters.especie ? parameters.especie : especimen1.dataValues?.especie ? especimen1.dataValues?.especie : 'sp.',
-            subespecie: parameters.subespecie ? parameters.subespecie : especimen1.dataValues?.subespecie ? especimen1.dataValues?.subespecie : 'sp.',
+            especie: parameters.especie ? parameters.especie : especimen1.dataValues?.especie ? especimen1.dataValues?.especie : 'sin especificar',
+            subespecie: parameters.subespecie ? parameters.subespecie : especimen1.dataValues?.subespecie ? especimen1.dataValues?.subespecie : 'sin especificar',
             posicionfilo: parameters.posicionfilo ? parameters.posicionfilo : especimen1.dataValues?.posicionfilo ? especimen1.dataValues?.posicionfilo : [],
-            periodo: parameters.periodo ? parameters.periodo : especimen1.dataValues?.periodo ? especimen1.dataValues?.periodo : 'sp.',
-            epoca: parameters.epoca ? parameters.epoca : especimen1.dataValues?.epoca ? especimen1.dataValues?.epoca : 'sp.',
-            piso: parameters.piso ? parameters.piso : especimen1.dataValues?.piso ? especimen1.dataValues?.piso :  'sp.',
-            cuenca: parameters.cuenca ? parameters.cuenca : especimen1.dataValues?.cuenca ? especimen1.dataValues?.cuenca :  'sp.',
-            formacion: parameters.formacion ? parameters.formacion : especimen1.dataValues?.formacion ? especimen1.dataValues?.formacion :  'sp.',
-            miembro: parameters.miembro ? parameters.miembro : especimen1.dataValues?.miembro ? especimen1.dataValues?.miembro :  'sp.',
-            localidad: parameters.localidad ? parameters.localidad : especimen1.dataValues?.localidad ? especimen1.dataValues?.localidad :  'sp.',
+            periodo: parameters.periodo ? parameters.periodo : especimen1.dataValues?.periodo ? especimen1.dataValues?.periodo : 'sin especificar',
+            epoca: parameters.epoca ? parameters.epoca : especimen1.dataValues?.epoca ? especimen1.dataValues?.epoca : 'sin especificar',
+            piso: parameters.piso ? parameters.piso : especimen1.dataValues?.piso ? especimen1.dataValues?.piso :  'sin especificar',
+            cuenca: parameters.cuenca ? parameters.cuenca : especimen1.dataValues?.cuenca ? especimen1.dataValues?.cuenca :  'sin especificar',
+            formacion: parameters.formacion ? parameters.formacion : especimen1.dataValues?.formacion ? especimen1.dataValues?.formacion :  'sin especificar',
+            miembro: parameters.miembro ? parameters.miembro : especimen1.dataValues?.miembro ? especimen1.dataValues?.miembro :  'sin especificar',
+            localidad: parameters.localidad ? parameters.localidad : especimen1.dataValues?.localidad ? especimen1.dataValues?.localidad :  'sin especificar',
             coordlat: parameters.coordlat ? parameters.coordlat : especimen1.dataValues?.coordlat ? especimen1.dataValues?.coordlat :  0,
             coordlong: parameters.coordlong ? parameters.coordlong : especimen1.dataValues?.coordlong ? especimen1.dataValues?.coordlong : 0,
-            campana: parameters.campana ? parameters.campana : especimen1.dataValues?.campana ? especimen1.dataValues?.campana :  'sp.',
-            nrocampo: parameters.nrocampo ? parameters.nrocampo : especimen1.dataValues?.nrocampo ? especimen1.dataValues?.nrocampo :  'sp.',
-            descubridor: parameters.descubridor ? parameters.descubridor : especimen1.dataValues?.descubridor ? especimen1.dataValues?.descubridor :  'sp.',
+            campana: parameters.campana ? parameters.campana : especimen1.dataValues?.campana ? especimen1.dataValues?.campana :  'sin especificar',
+            nrocampo: parameters.nrocampo ? parameters.nrocampo : especimen1.dataValues?.nrocampo ? especimen1.dataValues?.nrocampo :  'sin especificar',
+            descubridor: parameters.descubridor ? parameters.descubridor : especimen1.dataValues?.descubridor ? especimen1.dataValues?.descubridor :  'sin especificar',
             fechadescubrimiento: parameters.fechadescubrimiento ? parameters.fechadescubrimiento : especimen1.dataValues?.fechadescubrimiento ? especimen1.dataValues?.fechadescubrimiento : null,
-            preparador: parameters.preparador ? parameters.preparador : especimen1.dataValues?.preparador ? especimen1.dataValues?.preparador :  'sp.',
+            preparador: parameters.preparador ? parameters.preparador : especimen1.dataValues?.preparador ? especimen1.dataValues?.preparador :  'sin especificar',
             preparacionfecha: parameters.preparacionfecha ? parameters.preparacionfecha : especimen1.dataValues?.preparacionfecha ? especimen1.dataValues?.preparacionfecha : null,
             armario1: parameters.armario1 ? parameters.armario1 : especimen1.dataValues?.armario1 ? especimen1.dataValues?.armario1 : 0,
             estante1desde: parameters.estante1desde ? parameters.estante1desde : especimen1.dataValues?.estante1desde ? especimen1.dataValues?.estante1desde : 0,
@@ -220,7 +233,7 @@ rutas.get('/especimen',async (req, res) => {
             estante2hasta: parameters.estante2hasta ? parameters.estante2hasta : especimen1.dataValues?.estante2hasta ? especimen1.dataValues?.estante2hasta : 0,
             partesesqueletales: parameters.partesesqueletales ? parameters.partesesqueletales : especimen1.dataValues?.partesesqueletales ? especimen1.dataValues?.partesesqueletales : [],
             cantidadfrag :parameters.cantidadfrag ? parameters.cantidadfrag : especimen1.dataValues?.cantidadfrag ? especimen1.dataValues?.cantidadfrag : 0,
-            comentario: parameters.comentario ? parameters.comentario : especimen1.dataValues?.comentario ? especimen1.dataValues?.comentario :'sp.',
+            comentario: parameters.comentario ? parameters.comentario : especimen1.dataValues?.comentario ? especimen1.dataValues?.comentario :'sin especificar',
             imagen: parameters.imagen ? parameters.imagen : especimen1.dataValues?.imagen ? especimen1.dataValues?.imagen : [],
             pdf: parameters.pdf ? parameters.pdf : especimen1.dataValues?.pdf ? especimen1.dataValues?.pdf : [],
             URL: parameters.URL ? parameters.URL : especimen1.dataValues?.URL ? especimen1.dataValues?.URL : 'sin URL',
@@ -243,7 +256,25 @@ rutas.get('/especimen',async (req, res) => {
 
 rutas.put('/modificarespre', async (req, res)=>{
       console.log(req.body)
-      try{
+  
+    req.body.especimennumero.map(el => {
+                
+              try{
+              let update =  especimen.update({
+              prestado: req.body.prestado,
+            
+              },
+              {
+              where:{
+                especimennumero: el
+              }
+              })
+             
+            }
+            catch (err){
+              console.log(err)
+                }} )
+     /*  try{
         let update = await especimen.update({
          prestado: req.body.prestado,
        
@@ -257,13 +288,13 @@ rutas.put('/modificarespre', async (req, res)=>{
        }
        catch (err){
          console.log(err)
-       }
+       } */
       })
 
 
 
 rutas.post('/especimen',async (req, res) => {
-  console.log(req.body)
+
 
      let numero = await especimen.sequelize.query('select especimennumero from especimens');
      let numeros=[];
@@ -276,8 +307,8 @@ rutas.post('/especimen',async (req, res) => {
 
     try{
     const post = await especimen.create({
-        especimennumero: newId.toString() ,
-        bochonnumero: req.body[0].bochonnumero || "",
+        especimennumero: req.body[2]?.toString() || req.body[0]?.especimennumero.toString() || newId.toString(),
+        bochonnumero: req.body[0].bochonnumero || "0",
         sigla: "PVSJ",
         genero: req.body[0].genero,
         especie:req.body[0].especie,
@@ -321,6 +352,19 @@ console.log(err);
         res.status(404).send(err);
        
     } 
+    if(req.body[2]){
+      let updateBochon = await bochon.update({
+        especimennumero: req.body[2],
+
+       },
+       {
+        where:{
+          bochonnumero:req.body[0].bochonnumero
+        }
+       })
+
+      }
+    
 })
 
 // rutas.get('/catalogo',async (req, res) => {
@@ -361,18 +405,21 @@ rutas.delete('/especimen/:id', (req,res,next)=>{
 
     
 })
+rutas.get('/especimenHome', async (req, res) => {
 
+  let especimenes = await especimen.sequelize.query('select especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor from especimens')
+  res.send(especimenes)
+})
 //get prestamos
 rutas.get('/prestamos',async (req, res) => {
   
     let numero = req.query.id
+    console.log(numero)
     if(numero){
-      let  prestamo1 = await prestamo.findAll({
-        where: {
-          numeroespecimen: numero
-        }
-      });
-      res.send(prestamo1)
+      let  prestamo1 = await prestamo.findAll();
+      let filtrado = prestamo1.filter( e => e.numeroespecimen.includes(numero))
+      
+     res.send(filtrado)
     } else{
       let prestamos = await prestamo.findAll()
       res.send(prestamos)
@@ -388,6 +435,7 @@ rutas.post('/prestamos',async (req, res) => {
       generoespecie: req.body.generoespecie,
       tipoprestamo: req.body.tipoprestamo,
       emisor: req.body.emisor,
+      correo: req.body.correo,
       investigador:req.body.investigador,
       contacto: req.body.contacto,
       institucion:req.body.institucion,
@@ -428,14 +476,21 @@ rutas.put('/prestamos', async (req, res) =>{
 // get de tablas para POST 
 
 rutas.get('/tablas/',async (req, res) => {
-console.log('aqui esntre a tablas')
+ 
 const {parametro,indice} =req.query;
    try{
-
+     //const {indice} =req.query;
+    
   if(parametro==='genero'){
     let  genero = await generoespecie.findAll();
     res.send(genero)
   }
+
+  if(parametro==='formacion'){
+    let  genero = await formacioncuenca.findAll();
+    res.send(genero)
+  }
+
 
   if(parametro==='periodos'){
     var tabla=[
@@ -680,6 +735,51 @@ const {parametro,indice} =req.query;
         }
      }
 
+     if(modelo==='cuenca'){
+      try{
+        console.log('cuencaPA')
+        console.log('primario',primario)
+      console.log('secundario',secundario)
+        let origin = await formacioncuenca.sequelize.query('select cuenca from formacioncuencas')
+        //chequeo datos de tabla
+        let cuencasTabla=[];
+        origin[0].map(e=>{
+          cuencasTabla.push(e.cuenca);
+        })
+  
+        if(!cuencasTabla.includes(primario)){
+          //  console.log('nuevo genero')
+            let  newCuenca = await formacioncuenca.create({
+                cuenca: primario,
+                formacion:[]
+            });
+            res.send(newCuenca)
+        } else {
+            let origin = await formacioncuenca.sequelize.query("select formacion from formacioncuencas where cuenca ='"+primario+"'")
+  //console.log('secundario',origin[0][0])
+           let forma =origin[0][0].formacion;
+     //   console.log(secundario)
+           forma.push(secundario)
+            console.log(forma)
+            
+            let  newforma = await formacioncuenca.update({
+                formacion: forma,
+            },{
+                where:{
+                    cuenca: primario,
+                }
+            });
+            console.log(newforma)
+            res.send(newforma)
+           
+  
+        }
+      } catch(e){
+        res.send(e)
+      }
+     
+   }
+
      //post para nuevo filo
      if(modelo==='filo'){
         let origin = await filo.sequelize.query('select filo from filos')
@@ -809,7 +909,20 @@ const {parametro,indice} =req.query;
    })
 
 
+rutas.post('/postpartes', async (req,res)=> {
+   let parte1 = req.query
+  /*  let origin = await parte.sequelize.query("select secundaria from partes where principal = 'nueva'")
+                let allPartes = origin[0][0].secundaria;
+                allPartes.push(parte1.parte)
+                */
+   let nueva = await  parte.create({
+    principal: parte1.parte,
+    secundaria: [],
+     
+  }) 
+  res.send(nueva) 
 
+})
 
 
 
@@ -884,12 +997,26 @@ rutas.get('/bochon/especimen/id',async (req, res) => {
        //buscamos el ultimo id ingresado
           numero[0].map(e=>{
           
-              numeros.push(e.bochonnumero)
+              numeros.push(Number(e.bochonnumero))
           })
-        //  console.log(numeros)
+       // console.log(numeros)
            newId=Math.max(...numeros)+1;
             //console.log(resultadoBusqueda)
-       return res.send({newId})
+            var primero = numeros[0]
+            var final = newId
+            var faltantes = []
+    // console.log(primero, final)  
+      while(primero < final){
+       
+        if(!numeros.includes(primero)){
+          faltantes.push(primero)
+
+        }
+        primero++
+      }     
+      
+
+   return res.send({newId, faltantes}) 
    } 
  
    else if(!parametro){
@@ -998,26 +1125,27 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
          }
     
         
-         let especimen1 = await bochon.findOne({ where: { especimennumero: parameters.especimennumero } })
+         let especimen1 = await bochon.findOne({ where: { bochonnumero: parameters.bochonnumero } })
          let cambiarDetail = await bochon.update({
-             genero: parameters.genero ? parameters.genero : especimen1.dataValues?.genero ? especimen1.dataValues?.genero : 'sp.',
-             especie: parameters.especie ? parameters.especie : especimen1.dataValues?.especie ? especimen1.dataValues?.especie : 'sp.',
-             subespecie: parameters.subespecie ? parameters.subespecie : especimen1.dataValues?.subespecie ? especimen1.dataValues?.subespecie : 'sp.',
+          especimennumero: parameters.especimennumero ? parameters.especimennumero : especimen1.dataValues?.especimennumero ? especimen1.dataValues?.especimennumero : '0',   
+          genero: parameters.genero ? parameters.genero : especimen1.dataValues?.genero ? especimen1.dataValues?.genero : 'sin especificar',
+             especie: parameters.especie ? parameters.especie : especimen1.dataValues?.especie ? especimen1.dataValues?.especie : 'sin especificar',
+             subespecie: parameters.subespecie ? parameters.subespecie : especimen1.dataValues?.subespecie ? especimen1.dataValues?.subespecie : 'sin especificar',
              posicionfilo: parameters.posicionfilo ? parameters.posicionfilo : especimen1.dataValues?.posicionfilo ? especimen1.dataValues?.posicionfilo : [],
-             periodo: parameters.periodo ? parameters.periodo : especimen1.dataValues?.periodo ? especimen1.dataValues?.periodo : 'sp.',
-             epoca: parameters.epoca ? parameters.epoca : especimen1.dataValues?.epoca ? especimen1.dataValues?.epoca : 'sp.',
-             piso: parameters.piso ? parameters.piso : especimen1.dataValues?.piso ? especimen1.dataValues?.piso :  'sp.',
-             cuenca: parameters.cuenca ? parameters.cuenca : especimen1.dataValues?.cuenca ? especimen1.dataValues?.cuenca :  'sp.',
-             formacion: parameters.formacion ? parameters.formacion : especimen1.dataValues?.formacion ? especimen1.dataValues?.formacion :  'sp.',
-             miembro: parameters.miembro ? parameters.miembro : especimen1.dataValues?.miembro ? especimen1.dataValues?.miembro :  'sp.',
-             localidad: parameters.localidad ? parameters.localidad : especimen1.dataValues?.localidad ? especimen1.dataValues?.localidad :  'sp.',
+             periodo: parameters.periodo ? parameters.periodo : especimen1.dataValues?.periodo ? especimen1.dataValues?.periodo : 'sin especificar',
+             epoca: parameters.epoca ? parameters.epoca : especimen1.dataValues?.epoca ? especimen1.dataValues?.epoca : 'sin especificar',
+             piso: parameters.piso ? parameters.piso : especimen1.dataValues?.piso ? especimen1.dataValues?.piso :  'sin especificar',
+             cuenca: parameters.cuenca ? parameters.cuenca : especimen1.dataValues?.cuenca ? especimen1.dataValues?.cuenca :  'sin especificar',
+             formacion: parameters.formacion ? parameters.formacion : especimen1.dataValues?.formacion ? especimen1.dataValues?.formacion :  'sin especificar',
+             miembro: parameters.miembro ? parameters.miembro : especimen1.dataValues?.miembro ? especimen1.dataValues?.miembro :  'sin especificar',
+             localidad: parameters.localidad ? parameters.localidad : especimen1.dataValues?.localidad ? especimen1.dataValues?.localidad :  'sin especificar',
              coordlat: parameters.coordlat ? parameters.coordlat : especimen1.dataValues?.coordlat ? especimen1.dataValues?.coordlat :  0,
              coordlong: parameters.coordlong ? parameters.coordlong : especimen1.dataValues?.coordlong ? especimen1.dataValues?.coordlong : 0,
-             campana: parameters.campana ? parameters.campana : especimen1.dataValues?.campana ? especimen1.dataValues?.campana :  'sp.',
-             nrocampo: parameters.nrocampo ? parameters.nrocampo : especimen1.dataValues?.nrocampo ? especimen1.dataValues?.nrocampo :  'sp.',
-             descubridor: parameters.descubridor ? parameters.descubridor : especimen1.dataValues?.descubridor ? especimen1.dataValues?.descubridor :  'sp.',
+             campana: parameters.campana ? parameters.campana : especimen1.dataValues?.campana ? especimen1.dataValues?.campana :  'sin especificar',
+             nrocampo: parameters.nrocampo ? parameters.nrocampo : especimen1.dataValues?.nrocampo ? especimen1.dataValues?.nrocampo :  'sin especificar',
+             descubridor: parameters.descubridor ? parameters.descubridor : especimen1.dataValues?.descubridor ? especimen1.dataValues?.descubridor :  'sin especificar',
              fechadescubrimiento: parameters.fechadescubrimiento ? parameters.fechadescubrimiento : especimen1.dataValues?.fechadescubrimiento ? especimen1.dataValues?.fechadescubrimiento : null,
-             preparador: parameters.preparador ? parameters.preparador : especimen1.dataValues?.preparador ? especimen1.dataValues?.preparador :  'sp.',
+             preparador: parameters.preparador ? parameters.preparador : especimen1.dataValues?.preparador ? especimen1.dataValues?.preparador :  'sin especificar',
              preparacionfecha: parameters.preparacionfecha ? parameters.preparacionfecha : especimen1.dataValues?.preparacionfecha ? especimen1.dataValues?.preparacionfecha : null,
              armario1: parameters.armario1 ? parameters.armario1 : especimen1.dataValues?.armario1 ? especimen1.dataValues?.armario1 : 0,
              estante1desde: parameters.estante1desde ? parameters.estante1desde : especimen1.dataValues?.estante1desde ? especimen1.dataValues?.estante1desde : 0,
@@ -1027,7 +1155,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
              estante2hasta: parameters.estante2hasta ? parameters.estante2hasta : especimen1.dataValues?.estante2hasta ? especimen1.dataValues?.estante2hasta : 0,
              partesesqueletales: parameters.partesesqueletales ? parameters.partesesqueletales : especimen1.dataValues?.partesesqueletales ? especimen1.dataValues?.partesesqueletales : [],
              cantidadfrag :parameters.cantidadfrag ? parameters.cantidadfrag : especimen1.dataValues?.cantidadfrag ? especimen1.dataValues?.cantidadfrag : 0,
-             comentario: parameters.comentario ? parameters.comentario : especimen1.dataValues?.comentario ? especimen1.dataValues?.comentario :'sp.',
+             comentario: parameters.comentario ? parameters.comentario : especimen1.dataValues?.comentario ? especimen1.dataValues?.comentario :'sin especificar',
              imagen: parameters.imagen ? parameters.imagen : especimen1.dataValues?.imagen ? especimen1.dataValues?.imagen : [],
              pdf: parameters.pdf ? parameters.pdf : especimen1.dataValues?.pdf ? especimen1.dataValues?.pdf : [],
              URL: parameters.URL ? parameters.URL : especimen1.dataValues?.URL ? especimen1.dataValues?.URL : 'sin URL',
@@ -1064,8 +1192,8 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
          let newId=Math.max(...numeros)+1;
      try{
      const post = await bochon.create({
-          bochonnumero: newId.toString() ,
-          especimennumero: req.body[0].especimennumero || "sin datos", 
+          bochonnumero: req.body[0]?.bochonnumero.toString() || newId.toString(),
+          especimennumero: req.body[0].especimennumero || "sin especificar", 
            sigla: "PVSJ",
           genero: req.body[0].genero,
          especie:req.body[0].especie,
@@ -1115,23 +1243,16 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
  
  rutas.delete('/bochon/especimen/:id', (req,res,next)=>{
      const {id} = req.params;
-  
-         especimen.destroy({
+  console.log('ID->',id)
+         bochon.destroy({
              where: {
-                 especimennumero: id
+                 bochonnumero: id,
              }
            }).then(()=> res.status(202).send('Especimen Borrado!')).catch((err)=>res.status(404).send(err))
            
  
      
  })
- rutas.get('/getPdf/:filename', function(req, res) {
-  console.log(req.params.filename)
-  let filename = req.params.filename
-  const rs = fs.createReadStream("/app/src/pdf/" + filename);
-
-  rs.pipe(res)
-}); 
  
  
 

@@ -48,9 +48,9 @@ module.exports = async()=>{
         //     //BUSCO TODAS LAS ESPECIES DE ESE GENERO y creo el ARRAY para insrtar
              for(i=0;catalog.length>i;i++){
                 if(catalog[i].genero==e.genero) {
-                 if(!especies.includes(catalog[i].especie) && !tablaEspecies.includes(catalog[i].especie)){
+                 if(!especies.includes(catalog[i].especie.toLowerCase()) && !tablaEspecies.includes(catalog[i].especie.toLowerCase())){
                
-                    especies.push(catalog[i].especie)
+                    especies.push(catalog[i].especie.toLowerCase())
                  }
                 
                 }

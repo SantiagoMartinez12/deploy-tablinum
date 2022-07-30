@@ -1,26 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.89d0a10a.css",
-    "main.js": "/static/js/main.26ecd745.js",
+    "main.css": "/static/css/main.e7fbcab3.css",
+    "main.js": "/static/js/main.881a796b.js",
     "static/js/787.5b5dfee8.chunk.js": "/static/js/787.5b5dfee8.chunk.js",
-    "static/media/fondo.jpg": "/static/media/fondo.6434794799bc07069145.jpg",
+    "static/media/VDLL.jpg": "/static/media/VDLL.7d13e6116686324c1da9.jpg",
     "static/media/Ingreso-56026 (1).pdf": "/static/media/Ingreso-56026 (1).30dfc1e18a43d5ffcd28.pdf",
     "static/media/ChronostratChart2022-02SpanishAmer.pdf": "/static/media/ChronostratChart2022-02SpanishAmer.ac1c1606c0be17f1ad8e.pdf",
     "static/media/ChronostratChart2022-02.pdf": "/static/media/ChronostratChart2022-02.f87aad1314a0c164f2b2.pdf",
     "static/media/TABLINUM.jpg": "/static/media/TABLINUM.80491f8bb9b5cae39cd3.jpg",
     "static/media/profilePrueba.pdf": "/static/media/profilePrueba.fdf3e2d0b0d976b6f82a.pdf",
     "static/media/Profile.pdf": "/static/media/Profile.ca9c519abfc22de8c56b.pdf",
+    "static/media/dinoGif.gif": "/static/media/dinoGif.515c8f921a56bc571370.gif",
     "static/media/favicon.png": "/static/media/favicon.074c04b0a6b582a83a7d.png",
     "static/media/comprobante.pdf": "/static/media/comprobante.ee41b76e7e3b87155fff.pdf",
     "static/media/espec8-2.pdf": "/static/media/espec8-2.bb4dd1639c65be2c09aa.pdf",
     "static/media/_labels.pdf": "/static/media/81E3386C3D4ECB4309E777BC4F7CF647_labels.62c46b2c0d31d7039c9e.pdf",
     "index.html": "/index.html",
-    "main.89d0a10a.css.map": "/static/css/main.89d0a10a.css.map",
-    "main.26ecd745.js.map": "/static/js/main.26ecd745.js.map",
+    "main.e7fbcab3.css.map": "/static/css/main.e7fbcab3.css.map",
+    "main.881a796b.js.map": "/static/js/main.881a796b.js.map",
     "787.5b5dfee8.chunk.js.map": "/static/js/787.5b5dfee8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.89d0a10a.css",
-    "static/js/main.26ecd745.js"
+    "static/css/main.e7fbcab3.css",
+    "static/js/main.881a796b.js"
   ]
 }
