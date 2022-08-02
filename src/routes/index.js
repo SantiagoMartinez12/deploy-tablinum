@@ -1175,7 +1175,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
              
          },  {
              where: {
-                 especimennumero: parameters.especimennumero
+                 bochonnumero: parameters.bochonnumero,
              }
          })
          
