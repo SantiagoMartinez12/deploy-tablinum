@@ -39,7 +39,7 @@ module.exports = async()=>{
         //  console.log(e.genero)
            if(!generos.includes(e.genero) && !tablaGenero.includes(e.genero)){ //INSERTO NUEVO GENERO (y todas sus especies) 
              //console.log(e.genero)
-             generoespecie.create({
+           await  generoespecie.create({
                genero: e.genero,
                especie:['sp.']
                })
@@ -57,7 +57,7 @@ module.exports = async()=>{
                
              }
             //update de Tabla con las especies del genero correspondiente
-            generoespecie.update({
+           await generoespecie.update({
               especie: especies,
                   }, {
                 where: {
