@@ -78,7 +78,7 @@ rutas.get('/especimen',async (req, res) => {
              numeros.push(Number(e.especimennumero))
          })
        //  console.log(numeros)
-          newId=Math.max(...numeros)+1;
+          newId=Math.max(...numeros)+100;
            //console.log(resultadoBusqueda)
            var primero = numeros[0]
            var final = newId
@@ -90,11 +90,29 @@ rutas.get('/especimen',async (req, res) => {
          faltantes.push(primero)
 
        }
-       primero++
+       primero=primero+100;
      }     
      
       return res.send({newId, faltantes})
   } 
+  else if(parametro === "nuevoEsp") {
+    let numero = await especimen.sequelize.query('select especimennumero from especimens');
+   // console.log(numero)
+    let numeros=[];
+  
+    //buscamos el ultimo id ingresado
+       numero[0].map(e=>{
+          if(!numeros.includes(e.especimennumero.slice(0,e.especimennumero.length-2))){
+           numeros.push(e.especimennumero.slice(0,e.especimennumero.length-2))
+          }
+       })
+     //  console.log(numeros)
+        newId=Math.max(...numeros)+1;
+         //console.log(resultadoBusqueda)
+
+   
+    return res.send({newId,numeros,numero})
+} 
 
   else if(!parametro){
         const especimens =  await especimen.findAll()
@@ -816,13 +834,6 @@ const {parametro,indice} =req.query;
       console.error('Algo ocurrio al eliminar archivo', err)
     }
    })
-   rutas.get('/getPdf/:filename', function(req, res) {
-    console.log(req.params.filename)
-    let filename = req.params.filename
-    const rs = fs.createReadStream("/app/src/pdf/" + filename);
-  
-    rs.pipe(res)
-  }); 
    rutas.post('/usuario',async (req, res) => {
     try{
         let {id, correo, nombre, imagen} = req.body
@@ -1130,12 +1141,13 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
          } else {
            modif=[modificado];
          }
+         console.log(parameters.especimennumero)
     
         
          let especimen1 = await bochon.findOne({ where: { bochonnumero: parameters.bochonnumero } })
          let cambiarDetail = await bochon.update({
-          especimennumero: parameters.especimennumero ? parameters.especimennumero : especimen1.dataValues?.especimennumero ? especimen1.dataValues?.especimennumero : '0',   
-          genero: parameters.genero ? parameters.genero : especimen1.dataValues?.genero ? especimen1.dataValues?.genero : 'sin especificar',
+             especimennumero: parameters.especimennumero ? parameters.especimennumero : especimen1.dataValues?.especimennumero ? especimen1.dataValues?.especimennumero : '0',   
+             genero: parameters.genero ? parameters.genero : especimen1.dataValues?.genero ? especimen1.dataValues?.genero : 'sin especificar',
              especie: parameters.especie ? parameters.especie : especimen1.dataValues?.especie ? especimen1.dataValues?.especie : 'sin especificar',
              subespecie: parameters.subespecie ? parameters.subespecie : especimen1.dataValues?.subespecie ? especimen1.dataValues?.subespecie : 'sin especificar',
              posicionfilo: parameters.posicionfilo ? parameters.posicionfilo : especimen1.dataValues?.posicionfilo ? especimen1.dataValues?.posicionfilo : [],
@@ -1175,7 +1187,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
              
          },  {
              where: {
-                 bochonnumero: parameters.bochonnumero,
+                 bochonnumero: parameters.bochonnumero
              }
          })
          
