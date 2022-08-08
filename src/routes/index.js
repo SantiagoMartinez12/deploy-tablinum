@@ -821,6 +821,13 @@ const {parametro,indice} =req.query;
 
       })
    rutas.post('/subir-archivo', fileController.subirArchivo);
+   rutas.get('/getPdf/:filename', function(req, res) {
+    console.log(req.params.filename)
+    let filename = req.params.filename
+    const rs = fs.createReadStream("/app/src/pdf/" + filename);
+  
+    rs.pipe(res)
+  }); 
     
    rutas.delete('/eliminar-archivo',async (req, res) => {
      //fs.unlink('./../front/src/pdf/' + nombreArchivo)
