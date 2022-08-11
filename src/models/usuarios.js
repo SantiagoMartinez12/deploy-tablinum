@@ -10,6 +10,15 @@ const Sequelize = require('sequelize')
             nombre: {
                 type: DataTypes.STRING
             },
+            contraseña: {
+                type: DataTypes.STRING
+            },
+            datos1: {
+                type: DataTypes.STRING
+            },
+            datos2: {
+                type: DataTypes.STRING
+            },
             correo: {
                 type: DataTypes.STRING,
             },
