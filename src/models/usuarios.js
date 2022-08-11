@@ -10,8 +10,8 @@ const Sequelize = require('sequelize')
             nombre: {
                 type: DataTypes.STRING
             },
-            contraseña: {
-                type: DataTypes.STRING
+            contrasena: {
+                type: DataTypes.INTEGER
             },
             datos1: {
                 type: DataTypes.STRING
