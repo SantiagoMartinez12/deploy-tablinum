@@ -877,25 +877,26 @@ const {parametro,indice} =req.query;
       }
    })
    rutas.put('/modificarUsuario', async (req, res) =>{
-      let { id, correo, nombre, nivel, imagen1} = req.body
-      try{
-       let update = await usuarios.update({
-        correo: correo,
-        nombre: nombre,
-        nivel:nivel,
-        imagen: imagen1,
-       },
-       {
-        where:{
-          id:id
-        }
-       })
-       res.send(update)
+    let { id, correo, nombre, nivel, imagen1,contrasena} = req.body
+    try{
+     let update = await usuarios.update({
+      correo: correo,
+      nombre: nombre,
+      contrasena:contrasena,
+      nivel:nivel,
+      imagen: imagen1,
+     },
+     {
+      where:{
+        id:id
       }
-      catch (err){
-        console.log(err)
-      }
-   })
+     })
+     res.send(update)
+    }
+    catch (err){
+      console.log(err)
+    }
+ })
    rutas.delete('/eliminarUsuario/:id' , async (req,res)=>{
     let {id} = req.params
     try{
