@@ -837,7 +837,7 @@ const {parametro,indice} =req.query;
     let archivoname = nombreArchivo.nombreArchivo
 
     try {
-      fs.unlinkSync('/app/src/pdf/' + archivoname)
+      fs.unlinkSync('/var/www/pdf/' + archivoname)
       res.status(200).send({ status: 'success', msg: 'archivo ' + archivoname + ' eliminado'});
     } catch(err) {
       console.error('Algo ocurrio al eliminar archivo', err)
