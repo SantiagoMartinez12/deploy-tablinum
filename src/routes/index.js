@@ -825,7 +825,7 @@ const {parametro,indice} =req.query;
 
     console.log(req.params.filename)
     let filename = req.params.filename
-    const rs = fs.createReadStream("/app/src/pdf/" + filename);
+    const rs = fs.createReadStream("/var/www/pdf/" + filename);
   
     rs.pipe(res)
   }); 
