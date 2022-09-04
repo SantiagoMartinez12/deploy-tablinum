@@ -25,6 +25,7 @@ rutas.get('/especimen/id',async (req, res) => {
 })
 
 
+
 rutas.get('/especimen',async (req, res) => {
 
     let {parametro, busqueda }= req.query
@@ -77,6 +78,9 @@ rutas.get('/especimen',async (req, res) => {
          
              numeros.push(Number(e.especimennumero))
          })
+
+   //console.log('numeros',numeros)
+       
        //  console.log(numeros)
           newId=Math.max(...numeros)+100;
            //console.log(resultadoBusqueda)
@@ -99,6 +103,15 @@ rutas.get('/especimen',async (req, res) => {
     let numero = await especimen.sequelize.query('select especimennumero from especimens');
    // console.log(numero)
     let numeros=[];
+    let faltantes=[];
+    
+    numero[0].map(e=>{
+      
+      faltantes.push(e.especimennumero);
+      
+   })
+
+
   
     //buscamos el ultimo id ingresado
        numero[0].map(e=>{
@@ -106,12 +119,19 @@ rutas.get('/especimen',async (req, res) => {
            numeros.push(e.especimennumero.slice(0,e.especimennumero.length-2))
           }
        })
-     //  console.log(numeros)
+
+       var cont=1;
+       while(cont<numeros.length){
+         if(!numeros.includes(cont.toString())){
+           numeros.push(cont.toString())
+         }
+         cont++
+       }
         newId=Math.max(...numeros)+1;
          //console.log(resultadoBusqueda)
 
    
-    return res.send({newId,numeros,numero})
+    return res.send({newId,numeros,numero,faltantes})
 } 
 
   else if(!parametro){
@@ -321,6 +341,9 @@ rutas.post('/especimen',async (req, res) => {
         numero[0].map(e=>{
             numeros.push(e.especimennumero)
         })
+        
+      
+
         let newId=Math.max(...numeros)+1;
 
     try{
@@ -429,6 +452,10 @@ rutas.get('/especimenHome', async (req, res) => {
   res.send(especimenes)
 })
 //get prestamos
+rutas.get('/especimen4',async(req,res)=> {
+  let especimenes = await especimen.sequelize.query("select especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor from especimens where publico = 'true'")
+  res.send(especimenes)
+})
 rutas.get('/prestamos',async (req, res) => {
   
     let numero = req.query.id
@@ -488,6 +515,21 @@ rutas.put('/prestamos', async (req, res) =>{
   catch (err){
     console.log(err)
   }
+})
+
+rutas.delete('/eliminarprestamos', async (req, res) =>{
+  const {id} =req.query;
+console.log(id)
+ try{
+  let eliminarPrestamo = await  prestamo.destroy({
+    where: {id: id}
+  })
+   res.status(200).send('se elimino correctemente')
+  }
+  catch (err){
+    console.log(err)
+  }
+
 })
 
 
@@ -820,29 +862,29 @@ const {parametro,indice} =req.query;
 
 
       })
-   rutas.post('/subir-archivo', fileController.subirArchivo);
-   rutas.get('/getPdf/:filename', function(req, res) {
-
-    console.log(req.params.filename)
-    let filename = req.params.filename
-    const rs = fs.createReadStream("/var/www/pdf/" + filename);
-  
-    rs.pipe(res)
-  }); 
-
-
-   rutas.delete('/eliminar-archivo',async (req, res) => {
-     //fs.unlink('./../front/src/pdf/' + nombreArchivo)
-    let nombreArchivo = req.query
-    let archivoname = nombreArchivo.nombreArchivo
-
-    try {
-      fs.unlinkSync('/var/www/pdf/' + archivoname)
-      res.status(200).send({ status: 'success', msg: 'archivo ' + archivoname + ' eliminado'});
-    } catch(err) {
-      console.error('Algo ocurrio al eliminar archivo', err)
-    }
-   })
+      rutas.post('/subir-archivo', fileController.subirArchivo);
+      rutas.get('/getPdf/:filename', function(req, res) {
+   
+       console.log(req.params.filename)
+       let filename = req.params.filename
+       const rs = fs.createReadStream("/var/www/pdf/" + filename);
+     
+       rs.pipe(res)
+     }); 
+   
+   
+      rutas.delete('/eliminar-archivo',async (req, res) => {
+        //fs.unlink('./../front/src/pdf/' + nombreArchivo)
+       let nombreArchivo = req.query
+       let archivoname = nombreArchivo.nombreArchivo
+   
+       try {
+         fs.unlinkSync('/var/www/pdf/' + archivoname)
+         res.status(200).send({ status: 'success', msg: 'archivo ' + archivoname + ' eliminado'});
+       } catch(err) {
+         console.error('Algo ocurrio al eliminar archivo', err)
+       }
+      })
    rutas.post('/usuario',async (req, res) => {
     try{
         let {id, correo, nombre, imagen} = req.body
@@ -877,26 +919,26 @@ const {parametro,indice} =req.query;
       }
    })
    rutas.put('/modificarUsuario', async (req, res) =>{
-    let { id, correo, nombre, nivel, imagen1,contrasena} = req.body
-    try{
-     let update = await usuarios.update({
-      correo: correo,
-      nombre: nombre,
-      contrasena:contrasena,
-      nivel:nivel,
-      imagen: imagen1,
-     },
-     {
-      where:{
-        id:id
+      let { id, correo, nombre, nivel, imagen1,contrasena} = req.body
+      try{
+       let update = await usuarios.update({
+        correo: correo,
+        nombre: nombre,
+        contrasena:contrasena,
+        nivel:nivel,
+        imagen: imagen1,
+       },
+       {
+        where:{
+          id:id
+        }
+       })
+       res.send(update)
       }
-     })
-     res.send(update)
-    }
-    catch (err){
-      console.log(err)
-    }
- })
+      catch (err){
+        console.log(err)
+      }
+   })
    rutas.delete('/eliminarUsuario/:id' , async (req,res)=>{
     let {id} = req.params
     try{
@@ -1030,7 +1072,7 @@ rutas.get('/bochon/especimen/id',async (req, res) => {
        // console.log(numeros)
            newId=Math.max(...numeros)+1;
             //console.log(resultadoBusqueda)
-            var primero = numeros[0]
+            var primero = 1
             var final = newId
             var faltantes = []
     // console.log(primero, final)  
