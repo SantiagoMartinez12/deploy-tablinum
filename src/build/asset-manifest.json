@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.5d6d79d6.css",
-    "main.js": "/static/js/main.8eadadd9.js",
+    "main.css": "/static/css/main.3d25dab0.css",
+    "main.js": "/static/js/main.aeb6b20e.js",
     "static/js/498.2aa880aa.chunk.js": "/static/js/498.2aa880aa.chunk.js",
     "static/js/703.b9bdeffe.chunk.js": "/static/js/703.b9bdeffe.chunk.js",
     "static/js/598.f696fc2a.chunk.js": "/static/js/598.f696fc2a.chunk.js",
     "static/js/787.5b5dfee8.chunk.js": "/static/js/787.5b5dfee8.chunk.js",
-    "static/media/VDLL.jpg": "/static/media/VDLL.7d13e6116686324c1da9.jpg",
+    "static/media/VDLL.jpg": "/static/media/VDLL.b274615dd0ca77317d53.jpg",
     "static/media/ChronostratChart2022-02SpanishAmer.pdf": "/static/media/ChronostratChart2022-02SpanishAmer.ac1c1606c0be17f1ad8e.pdf",
     "static/media/ChronostratChart2022-02.pdf": "/static/media/ChronostratChart2022-02.f87aad1314a0c164f2b2.pdf",
     "static/media/logomuseogrande.png": "/static/media/logomuseogrande.0c3508c9b34d4de633ea.png",
@@ -14,15 +14,15 @@
     "static/media/dinoGif.gif": "/static/media/dinoGif.515c8f921a56bc571370.gif",
     "static/media/favicon.png": "/static/media/favicon.074c04b0a6b582a83a7d.png",
     "index.html": "/index.html",
-    "main.5d6d79d6.css.map": "/static/css/main.5d6d79d6.css.map",
-    "main.8eadadd9.js.map": "/static/js/main.8eadadd9.js.map",
+    "main.3d25dab0.css.map": "/static/css/main.3d25dab0.css.map",
+    "main.aeb6b20e.js.map": "/static/js/main.aeb6b20e.js.map",
     "498.2aa880aa.chunk.js.map": "/static/js/498.2aa880aa.chunk.js.map",
     "703.b9bdeffe.chunk.js.map": "/static/js/703.b9bdeffe.chunk.js.map",
     "598.f696fc2a.chunk.js.map": "/static/js/598.f696fc2a.chunk.js.map",
     "787.5b5dfee8.chunk.js.map": "/static/js/787.5b5dfee8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5d6d79d6.css",
-    "static/js/main.8eadadd9.js"
+    "static/css/main.3d25dab0.css",
+    "static/js/main.aeb6b20e.js"
   ]
 }
