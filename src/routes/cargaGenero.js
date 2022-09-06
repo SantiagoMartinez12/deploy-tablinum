@@ -22,8 +22,11 @@ module.exports = async()=>{
               
         //var findGenre='';
         const catalogo =  await especimen.sequelize.query('select genero, especie from especimens' )
+        const catalogoB =  await especimen.sequelize.query('select genero, especie from bochons' )
         const tablaGeneroEspecie =  await generoespecie.findAll()
         const catalog=catalogo[0]
+        const catalogB=catalogoB[0]
+
        
        tablaGeneroEspecie.map(e=>{
         if(!tablaGenero.includes(e.genero)){
@@ -72,6 +75,43 @@ module.exports = async()=>{
      
          })
     
+         catalogB.map(e=>{
+          //  console.log(e.genero)
+             if(!generos.includes(e.genero) && !tablaGenero.includes(e.genero)){ //INSERTO NUEVO GENERO (y todas sus especies) 
+               //console.log(e.genero)
+               generoespecie.create({
+                 genero: e.genero,
+                 especie:['sp.']
+                 })
+               generos.push(e.genero)
+  
+          //     //BUSCO TODAS LAS ESPECIES DE ESE GENERO y creo el ARRAY para insrtar
+               for(i=0;catalog.length>i;i++){
+                  if(catalog[i].genero==e.genero) {
+                   if(!especies.includes(catalog[i].especie.toLowerCase()) && !tablaEspecies.includes(catalog[i].especie.toLowerCase())){
+                 
+                      especies.push(catalog[i].especie.toLowerCase())
+                   }
+                  
+                  }
+                 
+               }
+              //update de Tabla con las especies del genero correspondiente
+              generoespecie.update({
+                especie: especies,
+                    }, {
+                  where: {
+                      genero: e.genero,
+                  }
+              });
+  
+             // console.log(especies)
+              
+             }
+            especies=['sp.'];
+       
+           })
+      
 
     
 };
