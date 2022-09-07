@@ -3,7 +3,8 @@ class FileController
 {
   subirArchivo = async (req, res, next) =>
   {
-    const archivo = req.files.archivo;
+   
+    const archivo = req.files.image
     const fileName = archivo.name;
     const path = '/var/www/pdf/' + fileName;
     console.log(path)
