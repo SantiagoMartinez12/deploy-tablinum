@@ -1264,8 +1264,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
      try{
      const post = await bochon.create({
           bochonnumero: req.body[0]?.bochonnumero.toString() || newId.toString(),
-          especimennumero: req.body[0].especimennumero || "sin especificar", 
-           sigla: "PVSJ",
+          sigla: "PVSJ",
           genero: req.body[0].genero,
          especie:req.body[0].especie,
          subespecie:req.body[0].subespecie,

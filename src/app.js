@@ -9,8 +9,8 @@ const FileController = require('./routes/FileController.js');
 const fileController = new FileController();
 const path = require('path');
 
-server.use(expres.urlencoded({ extended: true, limit: '50mb' }));
-server.use(expres.json({ limit: '50mb' }));
+server.use(expres.urlencoded({ extended: true, limit: '100mb' }));
+server.use(expres.json({ limit: '100mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(fileupload());
