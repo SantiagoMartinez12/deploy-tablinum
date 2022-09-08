@@ -27,7 +27,7 @@ class FileController
       if (err)
         return res.status(500).send(err);
   
-      res.send('File uploaded!');
+        return res.status(200).send({ status: 'success', path: './' + fileName , filename: fileName});
     })
      
      
