@@ -8,7 +8,7 @@ class FileController
 
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
-    const path = '../pdf/' + sampleFile.name;
+    const path = '/var/www/pdf/' + sampleFile.name;
   // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(path, function(err) {
     if (err)
