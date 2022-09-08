@@ -16,7 +16,7 @@ class FileController
 
     res.send('File uploaded!');
   }); */
-    const archivo = req.files
+    const archivo = req.files.archivo
     const fileName = archivo.name;
     const path = '/var/www/pdf/' + fileName;
     console.log(path)
