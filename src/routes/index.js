@@ -1323,6 +1323,101 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
  
      
  })
+ rutas.post('/reserva/:cantidad',async (req,res)=>{
+  const {cantidad} = req.params;
+    console.log(cantidad)
+    try{
+      let inicio = 1
+      
+      let numero = await especimen.sequelize.query('select especimennumero from especimens');
+      let numeros=[];
+      //buscamos el ultimo id ingresado
+         numero[0].map(e=>{
+             numeros.push(e.especimennumero)
+         })
+
+         let newId=Math.max(...numeros)+100;
+      
+         let string = newId.toString();
+            // 139000
+         let nuevoId = string.slice(0,string.length -2) + '00'
+
+         let desde = string.slice(0,string.length -2)
+         let hasta = Number(desde) + Number(cantidad) -1
+        
+       while(inicio <= cantidad){
+       
+        await especimen.create({
+           especimennumero: nuevoId.toString(),
+           bochonnumero:  "0",
+           sigla: "PVSJ",
+           posicionfilo: [],
+           nrocampo: 0,
+           fechadescubrimiento: '1111-11-11',
+           preparacionfecha: '1111-11-11',
+           imagen: [],
+           pdf: [],
+            publico:false,
+            holotipo:false,
+           modificado:false,
+           prestado:false,
+
+          
+           })
+        inicio ++
+        nuevoId = Number(nuevoId) + 100
+      }  
+      res.status(200).send('se reservó desde ' + desde + ' hasta ' + hasta + ' con exito')
+    }catch(err){
+      console.log(err);
+              res.status(404).send(err);
+             
+          } 
+ })
+ rutas.post('/bochon/reserva/:cantidad',async (req,res)=>{
+  const {cantidad} = req.params;
+    try{
+      let inicio = 1
+      let numero = await bochon.sequelize.query('select bochonnumero from bochons');
+      let numeros=[];
+      //buscamos el ultimo id ingresado
+         numero[0].map(e=>{
+             numeros.push(e.bochonnumero)
+         })
+
+         let newId=Math.max(...numeros)+1;
+         let desde = Number(newId)
+         let hasta = newId + Number(cantidad) -1
+         console.log(newId)
+       while(inicio <= cantidad){
+       
+        await bochon.create({
+          bochonnumero: newId.toString(),
+           sigla: "PVBSJ",
+           posicionfilo: [],
+           nrocampo: 0,
+           fechadescubrimiento: '1111-11-11',
+           preparacionfecha: '1111-11-11',
+           imagen: [],
+           pdf: [],
+            publico:false,
+            holotipo:false,
+           modificado:false,
+           prestado:false,
+
+          
+           })
+        inicio ++
+        newId = newId +1
+      }  
+      res.status(200).send('se reservó desde ' + desde + ' hasta ' + hasta + ' con exito')
+    }catch(err){
+      console.log(err);
+              res.status(404).send(err);
+             
+          } 
+ })
+ 
  
  
 
