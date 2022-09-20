@@ -79,12 +79,12 @@ rutas.get('/especimen',async (req, res) => {
              numeros.push(Number(e.especimennumero))
          })
 
-   //console.log('numeros',numeros)
+   console.log('numeros',numeros)
        
        //  console.log(numeros)
-          newId=Math.max(...numeros)+100;
+          newId=Math.max(...numeros)+1000;
            //console.log(resultadoBusqueda)
-           var primero = numeros[0]
+           var primero = Math.min(...numeros)
            var final = newId
            var faltantes = []
    // console.log(primero, final)  
@@ -94,7 +94,7 @@ rutas.get('/especimen',async (req, res) => {
          faltantes.push(primero)
 
        }
-       primero=primero+100;
+       primero=primero+1000;
      }     
      
       return res.send({newId, faltantes})
@@ -115,8 +115,8 @@ rutas.get('/especimen',async (req, res) => {
   
     //buscamos el ultimo id ingresado
        numero[0].map(e=>{
-          if(!numeros.includes(e.especimennumero.slice(0,e.especimennumero.length-2))){
-           numeros.push(e.especimennumero.slice(0,e.especimennumero.length-2))
+          if(!numeros.includes(e.especimennumero.slice(0,e.especimennumero.length-3))){
+           numeros.push(e.especimennumero.slice(0,e.especimennumero.length-3))
           }
        })
 
@@ -1263,9 +1263,9 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
          let newId=Math.max(...numeros)+1;
      try{
      const post = await bochon.create({
-          bochonnumero: req.body[0]?.bochonnumero.toString() || newId.toString(),
-          sigla: "PVSJ",
-          genero: req.body[0].genero,
+         bochonnumero: req.body[0]?.bochonnumero.toString() || newId.toString(),
+         sigla: "PVBSJ",
+         genero: req.body[0].genero,
          especie:req.body[0].especie,
          subespecie:req.body[0].subespecie,
          periodo:req.body[0].periodo,
@@ -1323,6 +1323,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
  
      
  })
+
  rutas.post('/reserva/:cantidad',async (req,res)=>{
   const {cantidad} = req.params;
     console.log(cantidad)
@@ -1336,13 +1337,13 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
              numeros.push(e.especimennumero)
          })
 
-         let newId=Math.max(...numeros)+100;
+         let newId=Math.max(...numeros)+1000;
       
          let string = newId.toString();
             // 139000
-         let nuevoId = string.slice(0,string.length -2) + '00'
+         let nuevoId = string.slice(0,string.length -3) + '000'
 
-         let desde = string.slice(0,string.length -2)
+         let desde = string.slice(0,string.length -3)
          let hasta = Number(desde) + Number(cantidad) -1
         
        while(inicio <= cantidad){
@@ -1365,7 +1366,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
           
            })
         inicio ++
-        nuevoId = Number(nuevoId) + 100
+        nuevoId = Number(nuevoId) + 1000
       }  
       res.status(200).send('se reservó desde ' + desde + ' hasta ' + hasta + ' con exito')
     }catch(err){
@@ -1418,10 +1419,110 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
           } 
  })
  
+ rutas.get('/modificarNumeros',async (req,res)=>{
+
+      let especimenes1 = await especimen.findAll()
+      function SortArray(x, y){
+       
+          if (Number(x.especimennumero) > Number(y.especimennumero)) {return -1;}
+            if (Number(x.especimennumero) < Number(y.especimennumero)) {return 1;}
+            return 0;
+        
+      }
+      let especimenes = especimenes1.sort(SortArray)
+      
+      especimenes.map(el => {
+        
+        let numerocorto = el.especimennumero.slice(0,el.especimennumero.length -2)
+        let sub = el.especimennumero.slice(el.especimennumero.length-2)
+        let nuevo = numerocorto + '0' + sub
+        especimen.update({
+          especimennumero: nuevo,
+        },{where: {especimennumero:el.especimennumero}})
+        console.log(nuevo) 
+        //console.log(numerocorto) 
+      })
  
+
+
+      //CAMBIO EN BOCHONES AGREGANDO UN CERO A LOS QUE TIENEN NUMERO DE ESPECIMEN Y PONIENDO UN 0 A LOS VACIOS
+      let bochones = await bochon.findAll()
+      
+      bochones.map(el => {
+       if(el.especimennumero && Number(el.especimennumero)>0){
+          nuevonumero=el.especimennumero+'0'
+      
+           bochon.update({
+           especimennumero: nuevonumero,
+         },{where: {especimennumero:el.especimennumero}})
+     
+       } else if(!el.especimennumero){
+       
+         bochon.update({
+         especimennumero: '0',
+       },{where: {bochonnumero:el.bochonnumero}})
+     }
+   
+       })
+      
+       res.send('se realizaron los cambios en bochones y especimenes')
+ })
  
 
    
+ rutas.get('/datalist',async (req, res) => {
+    
+ 
+  
+  let  especimenenes = await especimen.findAll();
+  let  bochones = await bochon.findAll();
+  let result={
+    descubridor:[],
+    campana:[],
+    miembro:[],
+    localidad:[],
+    preparador:[],
+  }
+
+  especimenenes.map(e=>{
+    if(!result.descubridor.includes(e.descubridor)){
+      result.descubridor.push(e.descubridor)
+    }
+    if(!result.campana.includes(e.campana)){
+      result.campana.push(e.campana)
+    }
+    if(!result.miembro.includes(e.miembro)){
+      result.miembro.push(e.miembro)
+    }
+    if(!result.localidad.includes(e.localidad)){
+      result.localidad.push(e.localidad)
+    }
+    if(!result.preparador.includes(e.preparador)){
+      result.preparador.push(e.preparador)
+    }
+  })
+
+  bochones.map(e=>{
+    if(!result.descubridor.includes(e.descubridor)){
+      result.descubridor.push(e.descubridor)
+    }
+    if(!result.campana.includes(e.campana)){
+      result.campana.push(e.campana)
+    }
+    if(!result.miembro.includes(e.miembro)){
+      result.miembro.push(e.miembro)
+    }
+    if(!result.localidad.includes(e.localidad)){
+      result.localidad.push(e.localidad)
+    }
+    if(!result.preparador.includes(e.preparador)){
+      result.preparador.push(e.preparador)
+    }
+
+  })
+
+   res.send(result)
+ })
  
   
 
