@@ -274,7 +274,7 @@ rutas.get('/especimen',async (req, res) => {
             comentario: parameters.comentario ? parameters.comentario : especimen1.dataValues?.comentario ? especimen1.dataValues?.comentario :'sin especificar',
             imagen: parameters.imagen ? parameters.imagen : especimen1.dataValues?.imagen ? especimen1.dataValues?.imagen : [],
             pdf: parameters.pdf ? parameters.pdf : especimen1.dataValues?.pdf ? especimen1.dataValues?.pdf : [],
-            URL: parameters.URL ? parameters.URL : especimen1.dataValues?.URL ? especimen1.dataValues?.URL : 'sin URL',
+            url: parameters.url ? parameters.url : especimen1.dataValues?.url ? especimen1.dataValues?.url : 'no',
             publico: public,
             holotipo: holo,
             modificado: modif,
@@ -448,12 +448,12 @@ rutas.delete('/especimen/:id', (req,res,next)=>{
 })
 rutas.get('/especimenHome', async (req, res) => {
 
-  let especimenes = await especimen.sequelize.query('select especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor from especimens')
+  let especimenes = await especimen.sequelize.query('select especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor, url from especimens')
   res.send(especimenes)
 })
 //get prestamos
 rutas.get('/especimen4',async(req,res)=> {
-  let especimenes = await especimen.sequelize.query("select especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor from especimens where publico = 'true'")
+  let especimenes = await especimen.sequelize.query("select especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor,url from especimens where publico = 'true'")
   res.send(especimenes)
 })
 rutas.get('/prestamos',async (req, res) => {
@@ -1419,7 +1419,7 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
           } 
  })
  
- rutas.get('/modificarNumeros',async (req,res)=>{
+ rutas.put('/modificarNumeros',async (req,res)=>{
 
       let especimenes1 = await especimen.findAll()
       function SortArray(x, y){
