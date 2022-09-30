@@ -13,11 +13,9 @@ const {periodoEpoca, periodo} = conn.models
 
 
 module.exports = async()=>{
-    //console.log('entra App Info')
 
     const periodoDb= await periodoEpoca.findAll()
-      console.log(periodoDb.length)
-      if(periodoDb.length==0){
+          if(periodoDb.length==0){
         var tabla=[
           {
           periodo: 'Cámbrico',
@@ -199,7 +197,6 @@ module.exports = async()=>{
                 epoca:el.nombre,
                 piso:el.piso,
               })
-           //   console.log(period,el.nombre,el.piso)
             })
         })
     

@@ -14,13 +14,12 @@ const {  especimen, generoespecie} = conn.models
 
 
 module.exports = async()=>{
-    //console.log('entra App Info')
+    
         var generos=[];
         var especies=['sp.'];
         var tablaGenero=[];
         var tablaEspecies=['sp.'];
               
-        //var findGenre='';
         const catalogo =  await especimen.sequelize.query('select genero, especie from especimens' )
         const catalogoB =  await especimen.sequelize.query('select genero, especie from bochons' )
         const tablaGeneroEspecie =  await generoespecie.findAll()
@@ -39,9 +38,7 @@ module.exports = async()=>{
        
 
          catalog.map(e=>{
-        //  console.log(e.genero)
            if(!generos.includes(e.genero) && !tablaGenero.includes(e.genero)){ //INSERTO NUEVO GENERO (y todas sus especies) 
-             //console.log(e.genero)
              generoespecie.create({
                genero: e.genero,
                especie:['sp.']
@@ -67,8 +64,6 @@ module.exports = async()=>{
                     genero: e.genero,
                 }
             });
-
-           // console.log(especies)
             
            }
           especies=['sp.'];
@@ -76,9 +71,7 @@ module.exports = async()=>{
          })
     
          catalogB.map(e=>{
-          //  console.log(e.genero)
              if(!generos.includes(e.genero) && !tablaGenero.includes(e.genero)){ //INSERTO NUEVO GENERO (y todas sus especies) 
-               //console.log(e.genero)
                generoespecie.create({
                  genero: e.genero,
                  especie:['sp.']
@@ -104,8 +97,6 @@ module.exports = async()=>{
                       genero: e.genero,
                   }
               });
-  
-             // console.log(especies)
               
              }
             especies=['sp.'];

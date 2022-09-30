@@ -13,10 +13,10 @@ const {parte, periodo} = conn.models
 
 
 module.exports = async()=>{
-    //console.log('entra App Info')
+   
 
     const periodoDb= await parte.findAll()
-      console.log(periodoDb.length)
+
       if(periodoDb.length==0){
         
         var tabla=[
@@ -161,24 +161,18 @@ module.exports = async()=>{
       
       }
 
-    //  console.log(tabla)
 
  if(tabla){
       
       tabla.map(e=>{
            const principal=e.primaria;   
            const secundaria=e.secundaria;
-
           parte.create({
             principal:principal,
             secundaria:secundaria,
           })
       
         });
-
-       // console.log(todas)
- 
-    
     
       }
     
