@@ -951,7 +951,12 @@ rutas.get('/bochon/especimen/id',async (req, res) => {
   res.send(especimenEncontrado)
  })
  
- 
+ rutas.get('/bochonesHome', async (req, res) => {
+
+  let especimenes = await bochon.sequelize.query('select bochonnumero,especimennumero, genero, especie, partesesqueletales, posicionfilo, campana, nrocampo, descubridor, url,formacion,holotipo from bochons')
+  
+  res.send(especimenes[0])
+})
  rutas.get('/bochon/especimen',async (req, res) => {
  
      let {parametro, busqueda }= req.query
