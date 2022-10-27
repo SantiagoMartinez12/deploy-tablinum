@@ -6,8 +6,8 @@ class FileController
  
     const archivo = req.files.archivo
     const fileName = archivo.name;
-    const path = '/var/www/pdf/' + fileName;
-   
+ 
+    const path = '../pdf/' + fileName;  // ruta para local
     if (fs.existsSync(path)){
       return res.status(200).send({ status: 'success', path: './' + fileName , filename: fileName});
     } else {
@@ -22,6 +22,8 @@ class FileController
           return res.status(200).send({ status: 'success', path: './' + fileName , filename: fileName});
       }) 
     }
+   
+     
      
   }
 }

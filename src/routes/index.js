@@ -173,12 +173,13 @@ rutas.get('/especimen',async (req, res) => {
         var parameters = req.body[0];
         var modificacion=[req.body[1]];
      
-
+      
 
         var propiedades= Object.keys(modificacion[0].espPrev);
         var valoresPrev=Object.values(modificacion[0].espPrev);
         var valoresNew=Object.values(modificacion[0].espNew);
 
+     
         var modificado={
           usuario:modificacion[0].usuario,
           fecha:modificacion[0].fecha,
@@ -190,28 +191,53 @@ rutas.get('/especimen',async (req, res) => {
        propiedades.map(e=>{
         var prop=e;
         if(prop==='partesesqueletales'){
+         
           var partes=0;
+        
+          if(valoresNew[cont].length===0 && valoresPrev[cont].length>0){
+            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> Sin partes')
+            partes=1
+          }
           valoresNew[cont].map(e=>{
             if(valoresNew[cont].length!==valoresPrev[cont].length  ||  !valoresPrev[cont].includes(e)){
               if(partes==0){
+               
                 modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> '+valoresNew[cont])
                 partes=1
+                
               }
              }
           })
+        
 
         } else if(prop==='posicionfilo'){
           var filo=0;
+          if(valoresNew[cont].length===0  && valoresPrev[cont].length>0){
+            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> Sin posicion filogenética')
+            filo=1
+          }
           valoresNew[cont].map(e=>{
             if(valoresNew[cont].length!==valoresPrev[cont].length  ||  !valoresPrev[cont].includes(e)){
               if(filo==0){
+                console.log(modificacion[0].espNew.posicionfilo.length)
+                if(modificacion[0].espNew.posicionfilo.length<1){
+           
+                  modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> Sin filo')
+                  filo=1
+                }else{
                 modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> '+valoresNew[cont])
                 filo=1
+                }
               }
            
             }
           })
 
+        }else if(prop==='comentario'){
+          if(valoresPrev[cont]!=valoresNew[cont]){
+            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> '+valoresNew[cont])
+          }
+        
         }
          else if(valoresPrev[cont]!=valoresNew[cont]&&prop!='imagen'&&prop!='pdf'&&prop!='modificado'){
           modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> '+valoresNew[cont])
@@ -1058,6 +1084,10 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
          var prop=e;
          if(prop==='partesesqueletales'){
            var partes=0;
+           if(valoresNew[cont].length===0 && valoresPrev[cont].length>0){
+            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> Sin partes')
+            partes=1
+          }
            valoresNew[cont].map(e=>{
              if(valoresNew[cont].length!==valoresPrev[cont].length  ||  !valoresPrev[cont].includes(e)){
                if(partes==0){
@@ -1069,6 +1099,10 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
  
          } else if(prop==='posicionfilo'){
            var filo=0;
+           if(valoresNew[cont].length===0  && valoresPrev[cont].length>0){
+            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> Sin posicion filogenética')
+            filo=1
+          }
            valoresNew[cont].map(e=>{
              if(valoresNew[cont].length!==valoresPrev[cont].length  ||  !valoresPrev[cont].includes(e)){
                if(filo==0){
@@ -1080,6 +1114,12 @@ rutas.put('/bochon/modificar', async ( req, res ) => {
            })
  
          }
+         else if(prop==='comentario'){
+          if(valoresPrev[cont]!=valoresNew[cont]){
+            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> '+valoresNew[cont])
+          }
+        
+        }
           else if(valoresPrev[cont]!=valoresNew[cont]&&prop!='imagen'&&prop!='pdf'&&prop!='modificado'){
            modificado.cambios.push(prop+': '+valoresPrev[cont]+' ---> '+valoresNew[cont])
          }

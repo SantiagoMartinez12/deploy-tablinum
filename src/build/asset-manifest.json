@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.5df92957.css",
-    "main.js": "/static/js/main.1d8de0b4.js",
+    "main.css": "/static/css/main.32211efa.css",
+    "main.js": "/static/js/main.037c4d05.js",
     "static/js/498.2aa880aa.chunk.js": "/static/js/498.2aa880aa.chunk.js",
     "static/js/703.b9bdeffe.chunk.js": "/static/js/703.b9bdeffe.chunk.js",
-    "static/js/598.f696fc2a.chunk.js": "/static/js/598.f696fc2a.chunk.js",
+    "static/js/513.bfca114a.chunk.js": "/static/js/513.bfca114a.chunk.js",
     "static/js/787.5b5dfee8.chunk.js": "/static/js/787.5b5dfee8.chunk.js",
     "static/media/VDLL.jpg": "/static/media/VDLL.b274615dd0ca77317d53.jpg",
     "static/media/ChronostratChart2022-02SpanishAmer.pdf": "/static/media/ChronostratChart2022-02SpanishAmer.ac1c1606c0be17f1ad8e.pdf",
@@ -13,15 +13,15 @@
     "static/media/tablinumBlanco.png": "/static/media/tablinumBlanco.bdc43bfc7b3155522e04.png",
     "static/media/dinoGif.gif": "/static/media/dinoGif.515c8f921a56bc571370.gif",
     "index.html": "/index.html",
-    "main.5df92957.css.map": "/static/css/main.5df92957.css.map",
-    "main.1d8de0b4.js.map": "/static/js/main.1d8de0b4.js.map",
+    "main.32211efa.css.map": "/static/css/main.32211efa.css.map",
+    "main.037c4d05.js.map": "/static/js/main.037c4d05.js.map",
     "498.2aa880aa.chunk.js.map": "/static/js/498.2aa880aa.chunk.js.map",
     "703.b9bdeffe.chunk.js.map": "/static/js/703.b9bdeffe.chunk.js.map",
-    "598.f696fc2a.chunk.js.map": "/static/js/598.f696fc2a.chunk.js.map",
+    "513.bfca114a.chunk.js.map": "/static/js/513.bfca114a.chunk.js.map",
     "787.5b5dfee8.chunk.js.map": "/static/js/787.5b5dfee8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5df92957.css",
-    "static/js/main.1d8de0b4.js"
+    "static/css/main.32211efa.css",
+    "static/js/main.037c4d05.js"
   ]
 }
